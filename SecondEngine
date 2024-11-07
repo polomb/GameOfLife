@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "EngineOfLife.h"
+
+void ZapisFaila(char* pole, char x, char y)
+{
+	//Создание ссылки на файл
+	FILE* ptr;
+	errno_t err;
+	//Файл открыт
+	err = fopen_s(&ptr, "./SaveFile.txt", "w+");
+	//Если не получилось
+	if (err != NULL)
+	{
+		printf("Error occurred while creating a file/writing in a file");
+		exit(1);
+	}
+	//Что положить в файл
+	char* dataInsert = (char*)malloc(2 * (x * y + 5) * sizeof(char));
+	dataInsert[0] = x;
+	dataInsert[1] = y;
+	int i = 2;
+	for (char a = 0; a < y; a++)
+	{
+		for (char b = 0; b < x; b++)
+		{
+			if (pole[a * x + b] == 2)
+			{
+				dataInsert[i] = b;
+				i += 1;
+				dataInsert[i] = a;
+				i += 1;
+			}
+		}
+	}
+	//Кладётся информация в файл
+	fputs(dataInsert, ptr);
+	//Закрытие файла
+	fclose(ptr);
+	free(dataInsert);
+}
+char* ChtenieFaila(char* pole, char* x, char* y)
+{
+	char x1 = 0; char y1 = 0;
+	//Создание ссылки на файл
+	FILE* ptr;
+	errno_t err;
+	//Файл открыт
+	err = fopen_s(&ptr, "./LoadFile.txt", "r");
+	//Если не получилось
+	if (err != NULL)
+	{
+		printf("Error occurred while reading a file");
+		exit(1);
+	}
+	//Сколько считать из файла
+	*x = fgetc(ptr);
+	*y = fgetc(ptr);
+	char xx = *x; char yy = *y;
+	char* dataRead = (char*)malloc(xx * yy * sizeof(char));
+	pole = (char*)malloc(yy * xx * sizeof(char));
+	for (int c = 0; c < yy; c++)
+	{
+		for (int d = 0; d < xx; d++)
+		{
+			pole[xx * c + d] = 1;
+		}
+	}
+	if (fgets(dataRead, xx * yy, ptr) != NULL)
+	{
+		x1 = fgetc(ptr);
+		y1 = fgetc(ptr);
+		pole[y1 * xx + x1] = 2;
+	}
+	fclose(ptr);
+	free(dataRead);
+	return pole;
+}
