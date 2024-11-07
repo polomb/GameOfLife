@@ -1,0 +1,12 @@
+#ifndef _ENGINE_OF_LIFE_
+#define _ENGINE_OF_LIFE_
+
+void SPovtoreniem(char* pole, char x, char y);
+void BezPovtorenya(char* pole, char x, char y);
+
+void ZapisFaila(char* pole, char x, char y);
+char* ChtenieFaila(char* pole, char* x, char* y);
+
+void PokazPolya(char* pole, char x, char y);
+
+#endif
