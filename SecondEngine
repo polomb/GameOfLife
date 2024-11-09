@@ -7,16 +7,29 @@ void ZapisFaila(char* pole, char x, char y)
 	//Создание ссылки на файл
 	FILE* ptr;
 	errno_t err;
-	//Файл открыт
-	err = fopen_s(&ptr, "./SaveFile.txt", "w+");
+	//Файл открыт Y N Y 12 12
+	err = fopen_s(&ptr, "./LoadFile.txt", "w+");
 	//Если не получилось
 	if (err != NULL)
 	{
 		printf("Error occurred while creating a file/writing in a file");
 		exit(1);
 	}
+	//Макс
+	int k = 0;
+	for (char a = 0; a < y; a++)
+	{
+		for (char b = 0; b < x; b++)
+		{
+			if (pole[a * x + b] == 2)
+			{
+				k += 1;
+			}
+		}
+	}
+	k = k * 2 + 2;
 	//Что положить в файл
-	char* dataInsert = (char*)malloc(2 * (x * y + 5) * sizeof(char));
+	char* dataInsert = (char*)malloc(k * sizeof(char));
 	dataInsert[0] = x;
 	dataInsert[1] = y;
 	int i = 2;
@@ -26,9 +39,9 @@ void ZapisFaila(char* pole, char x, char y)
 		{
 			if (pole[a * x + b] == 2)
 			{
-				dataInsert[i] = b;
+				dataInsert[i] = b+1;
 				i += 1;
-				dataInsert[i] = a;
+				dataInsert[i] = a+1;
 				i += 1;
 			}
 		}
@@ -66,11 +79,13 @@ char* ChtenieFaila(char* pole, char* x, char* y)
 			pole[xx * c + d] = 1;
 		}
 	}
-	if (fgets(dataRead, xx * yy, ptr) != NULL)
+	fgets(dataRead, xx * yy, ptr);
+	for (int i = 0; i < xx*yy; i++)
 	{
-		x1 = fgetc(ptr);
-		y1 = fgetc(ptr);
-		pole[y1 * xx + x1] = 2;
+		x1 = dataRead[i]-1;
+		i++;
+		y1 = dataRead[i]-1;
+		pole[xx * y1 + x1] = 2;
 	}
 	fclose(ptr);
 	free(dataRead);
