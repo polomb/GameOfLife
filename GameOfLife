@@ -5,7 +5,7 @@
 #include <time.h>
 #include <conio.h>
 #define MAX 1000
-#define TIME 25
+#define TIME 100
 //system("cls"); - очищает консоль
 // Y Y N 12 12 5 4 6 5 7 5 7 4 7 3 -1 -1
 // Y N N 12 12 5 4 6 5 7 5 7 4 7 3 -1 -1
@@ -28,15 +28,12 @@ void main()
 	HANDLE consol = GetStdHandle(STD_OUTPUT_HANDLE);
 	//Позиция курсора
 	COORD pos; pos.X = 1; pos.Y = 0;
-	SetConsoleCursorPosition(consol, pos);
-	//Начальное расположение
-	COORD nachpos; nachpos.X = 0; nachpos.Y = 0;
-	SetConsoleCursorPosition(consol, nachpos);
+	//SetConsoleCursorPosition(consol, pos);
 
 	//Начальные настройки
-	char periodic = 0, random = 0, schitka, gameFlag = 0, c = ' ';
+	char periodic = 0, random = 0, schitka, gameFlag = 0, c = ' ', FileNum;
 	//Поле, x, y.
-	char x, y; char* pole = 0;
+	int x, y; char* pole = 0;
 	printf("Set the starting settings:\n");
 	//Будет ли таблица периодичной (из правого переходит в левое, из нижнего в верхнее и т.п.)?
 	printf("Will pole be periodic? (Y or N)\n");
@@ -53,7 +50,12 @@ void main()
 	if (schitka == 'Y')
 	{
 		system("cls");
-		pole = ChtenieFaila(pole, &x, &y);
+		printf("Enter the file number from 0 to 9:\n");
+		do
+		{
+			scanf_s("%c", &FileNum);
+		} while (!((FileNum <= 57) && (FileNum >= 48)));
+		pole = ChtenieFaila(pole, &x, &y, FileNum);
 	}
 	else
 	{
@@ -68,11 +70,11 @@ void main()
 		char fl = 0;
 		while (fl == 0)
 		{
-			printf("Enter 2 <= x <= 120 (stolbiki) and 2 <= y <= 120 (stroki)\n");
+			printf("Enter 2 <= x <= 100 (stolbiki) and 2 <= y <= 100 (stroki)\n");
 			do
 			{
 				scanf_s("%d%d", &x, &y);
-			} while (!((x >= 2) && (y >= 2) && (x <= 120) && (y <= 120)));
+			} while (!((x >= 2) && (y >= 2) && (x <= 100) && (y <= 100)));
 			if (x > 59 || y > 29)
 			{
 				printf("With x > 59 or y > 29 your table will be unreadable/hard to read\n");
@@ -98,7 +100,8 @@ void main()
 			{
 				for (int d = 0; d < x; d++)
 				{
-					pole[x * c + d] = (rand() % 2) + 1;;
+					pole[x * c + d] = (rand() % 2) + 1;
+					//pole[x * c + d] = 2; // - For Debug
 				}
 			}
 		}
@@ -156,13 +159,27 @@ void main()
 			PokazPolya(pole, x, y);
 			printf("Print w/W _ a/A _ s/S _ d/D to go on pole\n");
 			printf("If you want to make cells alive/dead, print e/E (e/E means e or E)\n");
+			printf("If you want to save your pole, print c/C. (c/C means c or C)\n");
 			printf("If you want to start the game, print f/F. (f/F means f or F)\n");
 			break;
 		case 'f': case 'F':
 			gameFlag = 1;
 			break;
 		case 'c': case 'C':
-			ZapisFaila(pole, x, y);
+			system("cls");
+			printf("Enter the file number from 0 to 9:\n");
+			do
+			{
+				scanf_s("%c", &FileNum);
+			} while (!((FileNum <= 57) && (FileNum >= 48)));
+			ZapisFaila(pole, x, y, FileNum);
+			Sleep(50);
+			system("cls");
+			PokazPolya(pole, x, y);
+			printf("Print w/W _ a/A _ s/S _ d/D to go on pole\n");
+			printf("If you want to make cells alive/dead, print e/E (e/E means e or E)\n");
+			printf("If you want to save your pole, print c/C. (c/C means c or C)\n");
+			printf("If you want to start the game, print f/F. (f/F means f or F)\n");
 			break;
 		default:
 			break;
