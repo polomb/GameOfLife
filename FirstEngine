@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "EngineOfLife.h"
 
-void SPovtoreniem(char* pole, char x, char y)
+void SPovtoreniem(char* pole, int x, int y)
 {
 	//Создание доп поля
 	char* dop = (char*)malloc(y * x * sizeof(char));
@@ -159,7 +159,7 @@ void SPovtoreniem(char* pole, char x, char y)
 	}
 	free(dop);
 }
-void BezPovtorenya(char* pole, char x, char y)
+void BezPovtorenya(char* pole, int x, int y)
 {
 	//Создание доп поля
 	char* dop = (char*)malloc(y * x * sizeof(char));
