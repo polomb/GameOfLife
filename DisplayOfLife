@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "EngineOfLife.h"
 
-void PokazPolya(char* pole, char x, char y)
+void PokazPolya(char* pole, int x, int y)
 {
 	//Показ поля
 	for (int a = 0; a < y; a++)
