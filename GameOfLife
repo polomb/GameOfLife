@@ -4,9 +4,9 @@
 #include <Windows.h>
 
 #define A 8
-#define D1 10000
-#define D2 100000
-#define D3 10000000
+#define D1 200000
+#define D2 20000000
+#define D3 200000000
 #define FORCOUNT 10000
 #define FORRADIX 10000
 
@@ -304,30 +304,40 @@ int main()
 		for (int i = 0; i < N; i++)
 			arrIWorstR[i] = (N - i - 1) / (D3 / FORRADIX);
 
-		printf("Bubble;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D1, TimerD(bubbleSort, arrDWorst, D1), TimerD(bubbleSort, arrDSred, D1), TimerD(bubbleSort, arrDBest, D1));
-		printf("Insertion;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D1, TimerD(insertionSort, arrDWorst, D1), TimerD(insertionSort, arrDSred, D1), TimerD(insertionSort, arrDBest, D1));
-		printf("Select;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D1, TimerD(selectSort, arrDWorst, D1), TimerD(selectSort, arrDSred, D1), TimerD(selectSort, arrDBest, D1));
-		printf("Merge;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D2, TimerD(mergeSort, arrDWorst1, D2), TimerD(mergeSort, arrDSred1, D2), TimerD(mergeSort, arrDBest1, D2));
-		printf("Quick;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D2, TimerD(quickSort, arrDWorst1, D2), TimerD(quickSort, arrDSred1, D2), TimerD(quickSort, arrDBest1, D2));
-		printf("Shell;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D2, TimerD(shellSort, arrDWorst1, D2), TimerD(shellSort, arrDSred1, D2), TimerD(shellSort, arrDBest1, D2));
-		printf("Counting;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D3, TimerI(countingSort, arrIWorst, D3), TimerI(countingSort, arrISred, D3), TimerI(countingSort, arrIBest, D3));
-		printf("Radix;n;%d;%0.3lf;%0.3lf;%0.3lf\n", D3, TimerI(radixSort, arrIWorstR, D3), TimerI(radixSort, arrISredR, D3), TimerI(radixSort, arrIBestR, D3));
+		int a = 1;
+		while (a <= 10)
+		{
+			int b1 = D1 / (20 * a);
+			int b2 = D1 / (20 * a);
+			int b3 = D1 / (20 * a);
+			printf("Bubble;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b1, TimerD(bubbleSort, arrDWorst, b1), TimerD(bubbleSort, arrDSred, b1), TimerD(bubbleSort, arrDBest, b1));
+			printf("Insertion;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b1, TimerD(insertionSort, arrDWorst, b1), TimerD(insertionSort, arrDSred, b1), TimerD(insertionSort, arrDBest, b1));
+			printf("Select;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b1, TimerD(selectSort, arrDWorst, b1), TimerD(selectSort, arrDSred, b1), TimerD(selectSort, arrDBest, b1));
+			printf("Merge;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b2, TimerD(mergeSort, arrDWorst1, b2), TimerD(mergeSort, arrDSred1, b2), TimerD(mergeSort, arrDBest1, b2));
+			if (a == 10)
+				printf("Quick;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b2, TimerD(quickSort, arrDWorst1, b2), TimerD(quickSort, arrDSred1, b2), TimerD(quickSort, arrDBest1, b2));
+			else
+				printf("Quick;n;%d;%0.3lf\n", b2, TimerD(quickSort, arrDSred1, b2));
+			printf("Shell;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b2, TimerD(shellSort, arrDWorst1, b2), TimerD(shellSort, arrDSred1, b2), TimerD(shellSort, arrDBest1, b2));
+			printf("Counting;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b2, TimerI(countingSort, arrIWorst, b2), TimerI(countingSort, arrISred, b2), TimerI(countingSort, arrIBest, b2));
+			printf("Radix;n;%d;%0.3lf;%0.3lf;%0.3lf\n", b2, TimerI(radixSort, arrIWorstR, b2), TimerI(radixSort, arrISredR, b2), TimerI(radixSort, arrIBestR, b2));
 
-		free(arrDSred);
-		free(arrDBest);
-		free(arrDWorst);
+			free(arrDSred);
+			free(arrDBest);
+			free(arrDWorst);
 
-		free(arrDSred1);
-		free(arrDBest1);
-		free(arrDWorst1);
+			free(arrDSred1);
+			free(arrDBest1);
+			free(arrDWorst1);
 
-		free(arrISred);
-		free(arrIBest);
-		free(arrIWorst);
+			free(arrISred);
+			free(arrIBest);
+			free(arrIWorst);
 
-		free(arrISredR);
-		free(arrIBestR);
-		free(arrIWorstR);
+			free(arrISredR);
+			free(arrIBestR);
+			free(arrIWorstR);
+		}
 	}
 }
 //Сортировка пузырьком
